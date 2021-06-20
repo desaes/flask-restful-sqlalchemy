@@ -1,6 +1,6 @@
 import sqlite3
 
-class User:
+class UserModel:
     def __init__(self, _id, username, password): # id is a reserved keyword
         self.id = _id
         self.username = username
