@@ -29,7 +29,7 @@ class Item(Resource):
         item = ItemModel(name, request_data['price'])
         
         try:
-            item.insert()
+            item.save_to_db()
         except:
             return {"message": "An error occurred inserting the item"}, 500 # Internal server error
 
@@ -37,16 +37,9 @@ class Item(Resource):
                                 # accepted -> 202, used when queueing operations0
 
     def delete(self, name):
-        if ItemModel.find_by_name(name):
-            connection = sqlite3.connect("data.db")
-            cursor = connection.cursor()
-
-            query = "DELETE FROM items WHERE name=?"
-            cursor.execute(query, (name,))
-
-            connection.commit()
-            connection.close()            
-
+        item = ItemModel.find_by_name(name)
+        if item:
+            item.delete_from_db()
             return {'message': 'Item deleted'}
 
         return {'message': "Item with name {} not found.".format(name)}, 400 # bad request -> 400
@@ -56,19 +49,14 @@ class Item(Resource):
         request_data = Item.parser.parse_args()
         
         item = ItemModel.find_by_name(name)
-        updated_item = ItemModel(name, request_data['price'])
         
         if item is None:
-            try:
-                updated_item.insert()
-            except:
-                return {"message": "An error occurred inserting the item"}, 500 # Internal server error
+            item = ItemModel(name, request_data['price'])
         else:
-            try:
-                updated_item.update()
-            except:
-                return {"message": "An error occurred updating the item"}, 500 # Internal server error
-        return updated_item.json(), 201
+            item.price = data['price']
+        item.save_to_db()
+
+        return item.json(), 201
          
 
 class ItemList(Resource):
