@@ -9,10 +9,15 @@ class UserModel(db.Model):
     password = db.Column(db.String(80))
 
 
-    def __init__(self, _id, username, password): # id is a reserved keyword
-        self.id = _id
+    def __init__(self, username, password): # id is a reserved keyword
         self.username = username
         self.password = password
+
+    def save_to_db(self):
+        db.session.add(self)          
+        db.session.commit()
+
+      
 
     @classmethod
     def find_by_username(cls, username):
