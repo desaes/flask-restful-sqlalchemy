@@ -13,7 +13,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.secret_key = 'jose'  # this key should be keep out of code
-api = Api(app)
+api = Api(app) 
 
 # app.config['JWT_AUTH_URL_RULE'] = '/login' # will change the default /auth to /login
 # config JWT to expire within half an hour

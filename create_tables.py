@@ -10,4 +10,4 @@ create_table = "CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY, name t
 cursor.execute(create_table)
 
 connection.commit()
-connection.close()
+connection.close() 

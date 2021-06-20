@@ -7,7 +7,7 @@ class UserRegister(Resource):
     parser.add_argument('username',
         type=str,
         required=True,
-        help="This field cannot bet left blank!"
+        help="This field cannot bet left blank!" 
     )
     parser.add_argument('password',
         type=str,
