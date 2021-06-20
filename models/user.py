@@ -7,7 +7,7 @@ class UserModel:
         self.password = password
 
     @classmethod
-    def find_by_username(cls, username):
+    def find_by_username(cls, username): 
         connection = sqlite3.connect('data.db')
         cursor = connection.cursor()
 
